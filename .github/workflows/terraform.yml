@@ -32,9 +32,9 @@ jobs:
       with:
         tf_actions_version: 0.14.11
         tf_actions_subcommand: 'fmt'
-        TF_ACTION_COMMENT : "false"
-        tf_actions_working_dir: "."
-        continue-on-error: true
+       
+        tf_actions_working_dir: ""
+      
          
     - name: 'Terraform Init'
       uses: hashicorp/terraform-github-actions@master
