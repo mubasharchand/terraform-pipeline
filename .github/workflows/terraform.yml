@@ -15,11 +15,11 @@ jobs:
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
     runs-on: ubuntu-latest
-    environment: production
+    environment: dev
  
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
-      run:
+     run:
         shell: bash
  
     steps:
@@ -32,7 +32,9 @@ jobs:
       with:
         tf_actions_version: 0.14.11
         tf_actions_subcommand: 'fmt'
+        TF_ACTION_COMMENT : "false"
         tf_actions_working_dir: "."
+        continue-on-error: true
          
     - name: 'Terraform Init'
       uses: hashicorp/terraform-github-actions@master
