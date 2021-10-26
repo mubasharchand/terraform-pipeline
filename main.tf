@@ -13,7 +13,14 @@
 # }
 
 
-
+terraform {
+  backend "azurerm" {
+    resource_group_name  = "rg-terraformstate"
+    storage_account_name = "sleepstge2134"
+    container_name       = "terraformdemo"
+    key                  = "dev.terraformdemo.tfstate"
+  }
+}
 
 resource "azurerm_resource_group" "storage" {
   name     = var.resource_group_name
