@@ -76,7 +76,7 @@ resource "azurerm_storage_blob" "blob" {
 
 data "azurerm_storage_account_blob_container_sas" "blobsas" {
   connection_string = azurerm_storage_account.storage.primary_connection_string
-  storage_container_name    = azurerm_storage_container.container.name
+  container_name    = azurerm_storage_container.container.name
   https_only        = true
 
   # ip_address = "168.1.5.65"
