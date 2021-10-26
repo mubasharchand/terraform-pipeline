@@ -1,18 +1,3 @@
-# resource "azurerm_resource_group" "rg" {
-#   name     = var.resource_group_name
-#   location = var.location
-# }
-
-# resource "azurerm_storage_account" "storage" {
-#   name                     = var.storage_account_name
-#   resource_group_name      = azurerm_resource_group.rg.name
-#   location                 = var.location
-#   account_tier             = "Standard"
-#   account_replication_type = "LRS"
-#   allow_blob_public_access = true
-# }
-
-
 terraform {
   backend "azurerm" {
     resource_group_name  = "rg-terraformstate"
@@ -80,6 +65,35 @@ resource "azurerm_storage_container" "container" {
   storage_account_name  = azurerm_storage_account.storage.name
   container_access_type = "private" 
   
+}
+data "azurerm_storage_account_blob_container_sas" "blob-sas" {
+  connection_string = azurerm_storage_account.storage.primary_connection_string
+  container_name    = azurerm_storage_container.container.name
+  https_only        = true
+
+  # ip_address = "168.1.5.65"
+
+  start  = "2021-10-26"
+  expiry = "2021-11-26"
+
+  permissions {
+    read   = true
+    add    = true
+    create = false
+    write  = false
+    delete = true
+    list   = true
+  }
+
+  cache_control       = "max-age=5"
+  content_disposition = "inline"
+  content_encoding    = "deflate"
+  content_language    = "en-US"
+  content_type        = "application/json"
+}
+
+output "sas_url_query_string" {
+  value = data.azurerm_storage_account_blob_container_sas.blob-sas.sas
 }
 
 resource "azurerm_storage_blob" "blob" {
