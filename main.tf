@@ -74,31 +74,31 @@ resource "azurerm_storage_blob" "blob" {
   source                 = "kubii12.mp4"
 }
 
-data "azurerm_storage_account_blob_container_sas" "example" {
-  connection_string = azurerm_storage_account.storage.primary_connection_string
-  container_name    = azurerm_storage_container.container.name
-  https_only        = true
+# data "azurerm_storage_account_blob_container_sas" "example" {
+#   connection_string = azurerm_storage_account.storage.primary_connection_string
+#   container_name    = azurerm_storage_container.container.name
+#   https_only        = true
 
-  # ip_address = "168.1.5.65"
+#   # ip_address = "168.1.5.65"
 
-  start  = "2021-10-26"
-  expiry = "2021-11-26"
+#   start  = "2021-10-26"
+#   expiry = "2021-11-26"
 
-  permissions {
-    read   = true
-    add    = true
-    create = false
-    write  = false
-    delete = true
-    list   = true
-  }
+#   permissions {
+#     read   = true
+#     add    = true
+#     create = false
+#     write  = false
+#     delete = true
+#     list   = true
+#   }
 
-  cache_control       = "max-age=5"
-  content_disposition = "inline"
-  content_encoding    = "deflate"
-  content_language    = "en-US"
-  content_type        = "application/json"
-}
+#   cache_control       = "max-age=5"
+#   content_disposition = "inline"
+#   content_encoding    = "deflate"
+#   content_language    = "en-US"
+#   content_type        = "application/json"
+# }
 
 resource "azurerm_advanced_threat_protection" "threat_protection" {
   count              = var.enable_advanced_threat_protection ? 1 : 0
