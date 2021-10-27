@@ -1,7 +1,7 @@
 terraform {
   backend "azurerm" {
     resource_group_name  = "rg-terraformstate"
-    storage_account_name = "sleepstge2134"
+    storage_account_name = "sleepstg2321"
     container_name       = "terraformdemo"
     key                  = "dev.terraformdemo.tfstate"
   }
@@ -66,7 +66,15 @@ resource "azurerm_storage_container" "container" {
   container_access_type = "private" 
   
 }
-data "azurerm_storage_account_blob_container_sas" "blob-sas" {
+resource "azurerm_storage_blob" "blob" {
+  name                   = "veduio.mp4"
+  storage_account_name   = azurerm_storage_account.storage.name
+  storage_container_name = azurerm_storage_container.container.name
+  type                   = "Block"
+  source                 = "1. Kubernetes Intro.mp4"
+}
+
+data "azurerm_storage_account_blob_container_sas" "example" {
   connection_string = azurerm_storage_account.storage.primary_connection_string
   container_name    = azurerm_storage_container.container.name
   https_only        = true
@@ -92,34 +100,11 @@ data "azurerm_storage_account_blob_container_sas" "blob-sas" {
   content_type        = "application/json"
 }
 
-output "sas_url_query_string" {
-  value = data.azurerm_storage_account_blob_container_sas.blob-sas.sas
-}
-
-resource "azurerm_storage_blob" "blob" {
-  name                   = "sample-file.sh"
-  storage_account_name   = azurerm_storage_account.storage.name
-  storage_container_name = azurerm_storage_container.container.name
-  type                   = "Block"
-  source                 = "commands.sh"
-}
-
 resource "azurerm_advanced_threat_protection" "threat_protection" {
   count              = var.enable_advanced_threat_protection ? 1 : 0
   target_resource_id = azurerm_storage_account.storage.id
   enabled            = var.enable_advanced_threat_protection
 }
-
-
-
-# resource "azurerm_storage_blob" "blob" {
-#   name                   = "File.sh"
-#   storage_account_name   = azurerm_storage_account.storage.name
-#   count = length(var.containers)
-#   storage_container_name = azurerm_storage_container.storage[count.index].name
-#   type                   = "Block"
-#   source                 = "commands.sh"
-# }
 
 resource "azurerm_storage_management_policy" "storage" {
   count = length(var.lifecycles) == 0 ? 0 : 1

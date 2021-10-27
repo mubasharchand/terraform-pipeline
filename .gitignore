@@ -28,11 +28,15 @@ override.tf.json
 # Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
 # example: *tfplan*
 
-az ad sp create-for-rbac -n "TerraformSP" --role contributor \
-  --scopes /subscriptions/az ad sp create-for-rbac -n "TerraformSP" --role contributor \
-  --scopes /subscriptions/abeff472-9fa9-4f63-82da-3c2dd66e2525
 
 
-  az ad sp create-for-rbac -n "TerraformSP" --role contributor --scopes /subscriptions/abeff472-9fa9-4f63-82da-3c2dd66e2525
+#   az ad sp create-for-rbac -n "TerraformSP" --role contributor --scopes /subscriptions/abeff472-9fa9-4f63-82da-3c2dd66e2525
 
-  az ad sp create-for-rbac -n "http://backendstate" --role Contributor --scopes /subscriptions/abeff472-9fa9-4f63-82da-3c2dd66e2525/resourceGroups/rg-terraformstate
+# az group create --location eastus --name rg-terraformstate 
+
+# az storage account create --name sleepstg2321 --resource-group rg-terraformstate --location eastus --sku Standard_LRS
+
+# az storage container create --name terraformdemo --account-name sleepstg2321
+
+
+  
