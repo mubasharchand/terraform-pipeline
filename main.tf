@@ -67,11 +67,19 @@ resource "azurerm_storage_container" "container" {
   
 }
 resource "azurerm_storage_blob" "blob" {
+<<<<<<< HEAD
   name                   = "veduio.mp4"
   storage_account_name   = azurerm_storage_account.storage.name
   storage_container_name = azurerm_storage_container.container.name
   type                   = "Block"
   source                 = "1. Kubernetes Intro.mp4"
+=======
+  name                   = "sample-file.sh"
+  storage_account_name   = azurerm_storage_account.storage.name
+  storage_container_name = azurerm_storage_container.container.name
+  type                   = "Block"
+  source                 = "commands.sh"
+>>>>>>> 9082c1db79276d076fece3c7fc49fc9186525975
 }
 
 data "azurerm_storage_account_blob_container_sas" "example" {
