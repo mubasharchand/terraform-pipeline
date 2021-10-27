@@ -1,7 +1,7 @@
 terraform {
   backend "azurerm" {
     resource_group_name  = "rg-terraformstate"
-    storage_account_name = "sleepstge2134"
+    storage_account_name = "sleepstg2321"
     container_name       = "terraformdemo"
     key                  = "dev.terraformdemo.tfstate"
   }
@@ -74,7 +74,7 @@ resource "azurerm_storage_blob" "blob" {
   source                 = "commands.sh"
 }
 
-data "azurerm_storage_account_blob_container_sas" "blobsas" {
+data "azurerm_storage_account_blob_container_sas" "example" {
   connection_string = azurerm_storage_account.storage.primary_connection_string
   container_name    = azurerm_storage_container.container.name
   https_only        = true
